@@ -21,10 +21,10 @@ app.use('/admin', admin.routes);
 app.use(user.routes);
 
 
-
+const port = process.env.PORT || 3000;
 
 app.use(errors.get404Page);
 
-app.listen('https://zuck-shop.herokuapp.com', () => {
+app.listen(port, () => {
     console.log('listenin on port 3000');
 });
