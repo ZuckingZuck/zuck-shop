@@ -1,28 +1,30 @@
 const express = require('express');
 const app = express();
+const errors = require('./controllers/errors');
 
 const bodyParser = require('body-parser');
 
 app.set('view engine', 'pug');
 
-const adminRoutes = require('./routes/admin');
-const userRoutes = require('./routes/user');
+const admin = require('./routes/admin');
+const user = require('./routes/shop');
 
 const path = require('path');
 
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/admin', adminRoutes);
-app.use(userRoutes);
-
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res) => {
-    res.status(404).render('404', { title: 'Error' });
-});
+app.use('/admin', admin.routes);
+app.use(user.routes);
 
-app.listen(3000, () => {
+
+
+
+app.use(errors.get404Page);
+
+app.listen('https://zuck-shop.herokuapp.com', () => {
     console.log('listenin on port 3000');
 });
